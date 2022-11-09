@@ -33,3 +33,7 @@ export DISCORD_TOKEN=<token>
 ### Requirements
 python -m pip install -r requirements.txt
 
+### Misc notes
+
+[Why is not possible to get email from discord account](https://www.itgeared.com/how-to-get-someones-email-from-discord/#:~:text=To%20access%20it%2C%20open%20your,email%20associated%20with%20your%20Discord.)
+

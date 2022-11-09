@@ -5,6 +5,8 @@ import discord
 import random
 from dotenv import load_dotenv
 from discord.ext import commands
+from pprint import pprint
+
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -12,6 +14,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 #client = discord.Client(intents=discord.Intents.default())
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
 bot = commands.Bot(command_prefix="/", intents=intents)
 
 #@client.event
@@ -30,8 +33,8 @@ async def on_message(message):
     if message.author == bot.user:
         return
     # Direct message to bot
-    elif message.channel.type == discord.ChannelType.private:
-        await message.channel.send("I'm a bot, I don't respond to private messages")
+    #elif message.channel.type == discord.ChannelType.private:
+    #    await message.channel.send("I'm a bot, I don't respond to private messages")
     # Server message with mention to bot
     elif message.mentions and message.mentions[0] == bot.user:
         await message.author.send("Type /help for a list of commands")
@@ -51,6 +54,22 @@ async def nine(ctx):
 
     response = random.choice(brooklyn_99_quotes)
     await ctx.send(response)
+
+@bot.command(name='info', help='Responds with a qr code')
+async def info(ctx):
+    print(ctx.message.author)
+    print(ctx.message.author.id)
+    print(ctx.message.author.created_at)
+    print(ctx.message.author.display_name)
+    print(ctx.message.author.name)
+    print(ctx.message.author.discriminator)
+    print(bot.get_user(ctx.message.author.id).email)
+
+    await ctx.send(file=discord.File('./resources/test_qr_code.jpg'))
+
+@bot.command(name='invite', help='Responds with a qr code')
+async def invite(ctx):
+    await ctx.send(file=discord.File('./resources/test_qr_code.jpg'))
 
 """ 
 To ask new joiners to get a credential?
