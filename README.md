@@ -1,5 +1,5 @@
 # wal-bot
-Discord Bot for Social Credential PoC
+Discord Bot for Social Credential PoC 
 
 ## Setup
 
