@@ -25,14 +25,25 @@ cd venv
 source venv/bin/activate
 ```
 
-Set DISCORD_TOKEN environment variable
+Create a .env file in the root folder and add:
+```
+DISCORD_TOKEN=<Bot Token>
+DISCORD_CONTROLLER_INVITATION_URL=<url>
+DISCORD_CONTROLLER_TOKEN=<token>
+```
+Or set them as environment variables  
+
 Windows
 ```
-setx DISCORD_TOKEN <token> /m
-```
+setx DISCORD_TOKEN <Bot token> /m
+setx DISCORD_CONTROLLER_INVITATION_URL <url> /m
+setx DISCORD_CONTROLLER_TOKEN <token> /m
+```  
 Linux/MacOS (TODO add instructions for bashrc)
 ```bash
-export DISCORD_TOKEN=<token>
+export DISCORD_TOKEN=<Bot token>
+export DISCORD_CONTROLLER_INVITATION_URL=<url>
+export DISCORD_CONTROLLER_TOKEN=<token>
 ```
 ### Requirements
 python -m pip install -r requirements.txt
