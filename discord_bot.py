@@ -18,7 +18,7 @@ intents.message_content = True
 intents.members = True
 bot = commands.Bot(command_prefix=CMD_PREFIX, intents=intents)
 
-def get_invitation(discord_user):
+def get_invitation(discord_user, email):
     # Set the API endpoint URL
     invitation_url = os.getenv('DISCORD_CONTROLLER_INVITATION_URL')
 
@@ -28,7 +28,9 @@ def get_invitation(discord_user):
         "name": discord_user.name,
         "discriminator": discord_user.discriminator,
         "user": discord_user.name + "#" + discord_user.discriminator,
-        "created_at": discord_user.created_at.isoformat()
+        "created_at": discord_user.created_at.isoformat(),
+        "email": email
+
     }
 
     # Set the authorization header with the bearer token
@@ -78,7 +80,9 @@ async def on_message(message):
     # Direct message to bot
     elif message.channel.type == discord.ChannelType.private:
         if not message.content.startswith(CMD_PREFIX):
-            await message.channel.send(messages.HELP_CMD_MSG)
+            await message.author.send(messages.WELCOME_MSG)
+            await message.author.send("--")
+            await message.author.send(messages.HELP_CMD_MSG)
     # Server message with mention to bot
     elif message.mentions and message.mentions[0] == bot.user:
         await message.author.send(messages.WELCOME_MSG)
@@ -113,7 +117,7 @@ email_desc = commands.parameter(default=messages.ISSUE_PARAM_EMAIL_DEFAULT, desc
 @bot.command(name='issue', brief=messages.ISSUE_CMD_MSG_S, help=messages.ISSUE_CMD_MSG_L)
 async def issue(ctx, email: str = email_desc):
     logging.info(f'cmd issue: {ctx.message.author}')
-    response = get_invitation(ctx.message.author)
+    response = get_invitation(ctx.message.author, email)
     # Check the status code of the response
 
     if response.status_code == 200:
@@ -132,7 +136,7 @@ async def issue(ctx, email: str = email_desc):
 @bot.command(name='issue_url', brief=messages.ISSUE_URL_CMD_MSG_S, help=messages.ISSUE_URL_CMD_MSG_L)
 async def issue(ctx, email: str = email_desc):
     logging.info(f'cmd issue: {ctx.message.author}')
-    response = get_invitation(ctx.message.author)
+    response = get_invitation(ctx.message.author, email)
     # Check the status code of the response
 
     if response.status_code == 200:
