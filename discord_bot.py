@@ -150,7 +150,16 @@ async def issue(ctx, email: str = email_desc):
         # If the request is not successful, print the status code
         print("Request failed with status code:", response.status_code)
 
-
+def create_log_file():
+    log_directory = "./resources"
+    log_file_path = f"{log_directory}/activity.log"
+    if not os.path.exists(log_directory):
+        os.makedirs(log_directory)
+    if not os.path.exists(log_file_path):
+        with open(log_file_path, "w"):
+            pass  # create an empty file
+        
+    logging.basicConfig(filename='./resources/activity.log', level=logging.DEBUG, format='%(asctime)s | %(message)s')
 
 """ 
 To ask new joiners to get a credential?
@@ -161,7 +170,7 @@ async def on_member_join(member):
         f'Hi {member.name}, welcome to my Discord server!'
     )
  """
-logging.basicConfig(filename='./resources/activity.log', encoding='utf-8', level=logging.DEBUG, format='%(asctime)s | %(message)s')
+create_log_file()
 
 bot.run(TOKEN)
 
